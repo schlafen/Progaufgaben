@@ -1,0 +1,45 @@
+package pack;
+
+import java.io.FileInputStream;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class EmpfehlungKunde {
+	
+	private Kunde[] = new Kunde[]();
+	public EmpfehlungKunde() {
+		try (Workbook wb = new XSSFWorkbook(new FileInputStream(".//src//pack//Daten.xlsx"))) {
+			Sheet sheet = wb.getSheetAt(0);
+			for (Row row : sheet) {
+				if(row.getRowNum()==0) {}
+				else {
+				System.out.println("rownum: " + row.getRowNum());
+				int i=0;
+				double kundenNr = 0;
+				for (Cell cell : row) {
+					System.out.println(cell);
+					
+					if (cell.getColumnIndex() == 0) {
+						kundenNr = cell.getNumericCellValue();
+					}
+
+					// Artikel in Liste hinzufügen
+					if (cell.getColumnIndex() <= 6 && cell.getColumnIndex() > 1) {
+						if (cell.getNumericCellValue() == 1) {
+							artikelliste[i] = new Artikel((i+2) * 111);
+						}
+					i++;
+					}
+						
+					einkauf.put(kundenNr, artikelliste);
+				}
+				}
+			}
+		}
+	}
+	
+}

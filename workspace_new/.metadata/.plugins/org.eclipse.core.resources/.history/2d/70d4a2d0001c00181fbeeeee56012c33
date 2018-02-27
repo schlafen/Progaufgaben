@@ -1,0 +1,7 @@
+import java.util.TreeMap;
+
+public class Empfehlung {
+	
+	private TreeMap<Kunde, Artikel[][]> einkauf = new TreeMap<>();
+	
+}

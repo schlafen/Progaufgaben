@@ -1,0 +1,216 @@
+/**
+ * Mareike Meyer
+ * 03.11.2017
+ * Diese Beispielklasse bietet Funktionen zur Berechnung von Pseudo-Zufallszahlen, dem Mittelwert dieser, der Varianz dieser,
+ * von einer zufälligen PIN sowie von der Anzahl von Zahlen mit genau zwei Vieren im Wertebereich von 1 bis 9.999.
+ */
+
+
+
+package mypack;
+import java.text.DecimalFormat;
+import java.text.Format;
+import java.util.Arrays;
+public class Aufgabe2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		
+		double a = 521;
+		double b = 1;
+		double m = 1234;
+		double seed = 5;
+		double erwarteterMittelwert = (m-1)/2;
+		DecimalFormat f = new DecimalFormat("###,##0.00");
+		testePeriode(a, b, m, seed);
+				
+		pinGenerieren(a, b, m, seed);
+		
+		System.out.print("Mittelwert: " + f.format(testeMittelwert(a, b, m, seed)));
+		System.out.println(" Erwartet: " + f.format(erwarteterMittelwert));
+		System.out.print("Varianz: " + f.format(testeVarianz(a, b, m, seed)));
+		System.out.println(" Erwartet: " + f.format(((Math.pow(m, 2) - 1)/12)));
+		System.out.println("Generierte PIN: " + pinGenerieren(a, b, m, seed));
+		System.out.println("Anzahl Doppel-Vieren zwischen 1 und 9.999: " + zaehleVieren());
+		
+		}
+	
+		
+
+	/**
+	 * Diese Methode berechnet eine Pseudo-Zufallszahl.
+	 * @param a: Parameter für Algorithmus der Pseudos-Zufallszahl-Berechnung
+	 * @param b: Parameter für Algorithmus der Pseudos-Zufallszahl-Berechnung
+	 * @param m: Parameter für Algorithmus der Pseudos-Zufallszahl-Berechnung
+	 * @param seed: Die "Saat", die als Basis für die Pseudo-Zufallszahl dient
+	 * @return: Zufallszahl nach Algorithmus 
+	 */
+	public static double naechsteZahl(double a, double b, double m, double seed){
+		double zufallszahl = (a * seed + b) % m;
+		//seed = zufallszahl;
+		
+		
+		return zufallszahl;
+	}
+	/**
+	 * Diese Methode berechnet die Anzahl der berechneten Pseudo-Zufallszahlen, bis die zuerst berechnete
+	 * Pseudo-Zufallszahl wieder kommt, also die Periode.
+	 * @param a: s. naechsteZahl()
+	 * @param b: s. naechsteZahl()
+	 * @param m: s. naechsteZahl()
+	 * @param seed: s. naechsteZahl()
+	 * @return: Ergebnis der Berechnung der Periode
+	 */
+	
+	public static int testePeriode(double a, double b, double m, double seed) {
+			
+		int periode=0;
+		
+		double naechstezahl = 0;
+		double startzahl = naechsteZahl(a, b, m, seed);
+		seed = startzahl;
+		
+		while (naechstezahl!=startzahl) {
+		naechstezahl = naechsteZahl(a, b, m, seed);
+		seed = naechstezahl;
+		periode = periode + 1;
+		}
+		
+		System.out.println("Periode nach Schritt " + periode + " für Zahl " + startzahl);
+		return periode;
+		
+		
+		
+	}
+	
+	/**
+	 * Diese Methode berechnet eine Millionen Pseudo-Zufallszahlen und errechnet den Mittelwert.
+	 * @param a: s. naechsteZahl()
+	 * @param b: s. naechsteZahl()
+	 * @param m: s. naechsteZahl()
+	 * @param seed: s. naechsteZahl()
+	 * @return: Errechneter Mittelwert
+	 */
+	public static double testeMittelwert(double a, double b, double m, double seed) {
+		long max = 1000000000;
+		double sum = 0;
+		double random = 0;
+		double mittelwert = 0;
+		
+		
+		for(double i = 1; i <=max; i++) {
+			random = naechsteZahl(a, b, m, seed);
+			sum = sum + random;
+			seed = random;
+			}
+		
+		
+		mittelwert = sum/max;
+		
+		return mittelwert;
+		
+		}
+	/**
+	 * Diese Methode berechnet die Varianz der errechneten Pseudo-Zufallszahlen.
+	 * @param a: s. naechsteZahl()
+	 * @param b: s. naechsteZahl()
+	 * @param m: s. naechsteZahl()
+	 * @param seed: s. naechsteZahl()
+	 * @return
+	 */
+	public static double testeVarianz(double a, double b, double m, double seed) {
+		double varianz = 0;
+		double mittelwert = testeMittelwert(a, b, m, seed);
+		double sum = 0;
+		double max = 1000000000;
+		double random = 0;
+		
+		for(long i = 1; i<=max; i++) {
+			random = naechsteZahl(a, b, m, seed);
+			sum = Math.pow(random - mittelwert, 2) + sum;
+			seed = random;
+		}
+		
+		varianz = sum/max;
+		
+		return varianz;
+		
+	}
+	
+	/**
+	 * Diese Methode generiert einen zufälligen PIN als String, der keine doppelten Zahlen enthält.
+	 * @param a: s. naechsteZahl()
+	 * @param b: s. naechsteZahl()
+	 * @param m: s. naechsteZahl()
+	 * @param seed: s. naechsteZahl()
+	 * @return: Berechneter PIN
+	 */
+	public static String pinGenerieren(double a, double b, double m, double seed) {
+		String pin="";
+		
+		//char[] characters = {pin.charAt(0), pin.charAt(1), pin.charAt(2), pin.charAt(3)};
+		
+		
+		double random = naechsteZahl(a, b, m, seed);
+		pin = "" + random;
+		
+		while(pin.length()>4 || pin.length()<4) {
+			seed = random;
+			random = naechsteZahl(a, b, m, seed);
+			pin= "" + random;
+		}
+		
+		if(pin.length()<= 4) {
+						
+			if(pin.length() == 3) {
+				pin = "0" + pin;				
+			}
+										
+		}
+		
+		return pin;
+	}
+	/**
+	 * Diese Methode berechnet die Anzahl von Zahlen, die genau zwei Vieren beinhalten in dem
+	 * Wertebereich von 1 bis 9.999.
+	 * @return: Berechnete Anzahl von Zahlen, die genau zwei Vieren beinhalten
+	 */
+	public static int zaehleVieren() {
+		int anzahlVieren = 0;
+		char a = 4;
+		int counter = 0;
+		String s = "";
+		
+		
+		
+		
+		for(int i=1; i<10000; i++) {
+			s = "" + i;
+						
+			}
+			for (int j=0; j < s.length(); j++) {
+				
+				char compare = s.charAt(j);
+				if(compare == a) {
+					counter++;
+					if(counter==2) {
+						anzahlVieren++;
+				
+				
+				//if(s.charAt(j) == 4) {
+				//counter++;
+									
+				//}
+				
+				//if(counter==2) {
+				//anzahlVieren++;
+				}
+				counter = 0;
+			}
+		}
+		
+		return anzahlVieren;
+	}
+	
+}

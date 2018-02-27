@@ -1,0 +1,23 @@
+
+public class Kunde implements Comparable<Kunde>{
+	
+	//attribute
+	private int kundenNr;
+	private String kundenName;
+	private String land;
+	private int alter;
+	
+	//Konstruktor
+	public Kunde() {
+		
+	}
+	
+	@Override
+	public int compareTo(Kunde k) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
+
+}

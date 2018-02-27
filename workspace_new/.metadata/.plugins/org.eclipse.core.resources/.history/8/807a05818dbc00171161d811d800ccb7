@@ -1,0 +1,33 @@
+package mypack;
+
+public class Aufgabe2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		
+		long a = 521;
+		long b = 1;
+		long m = 1234;
+		long seed = 5;
+		
+		
+		}
+
+	
+	public static long naechsteZahl(long a, long b, long m, long seed){
+		long zufallszahl = (a * seed + b) % m;
+				
+		
+		return zufallszahl;
+	}
+	
+	public static int testePeriode(long a) {
+		
+		return int periode;
+		
+		
+	}
+	
+
+}

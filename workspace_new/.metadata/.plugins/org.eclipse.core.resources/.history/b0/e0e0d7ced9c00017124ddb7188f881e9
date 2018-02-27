@@ -1,0 +1,184 @@
+/**
+ * Mareike Meyer
+ * 
+ * 03.11.2017
+ * 
+ * Dieses Klasse bietet eine Annuitäten- sowie eine Ratentilgungsrechnung in Tabellendarstellung.
+ * Die dargestellten Werte sind Jahr, Restschuld am Jahresanfang, Zinsen, Tilgung sowie Rate pro Jahr für beide Rechnungen.
+ * 
+ * ToDo: Beseitigung des doppelten Abstandes zwischen der Spalte Zinsen und Tilgung.
+ */
+
+
+
+
+
+
+package mypack;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
+public class Aufgabe1 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		//Variablen
+		int tilgungsdauer = 10;
+		double p = 0.07;
+				
+		//Variablen für Annuitätentilgung
+		double kreditsummeannuitaet = 25000.0;
+		double zinsenannuitaet = 0;	
+		double projahrannuitaet = 0;
+		int jahrannuitaet = 1;
+		double tilgungsrateannuitaet = 0;
+		
+		//Variablen für Ratentilgung
+		double kreditsummeratentilgung = 25000.0;
+		double tilgungsrate = 0;
+		double zinsenratentilgung = 0;
+		double projahrratentilgung = 0;
+		int jahrratentilgung = 1;
+		
+		//Variablen für Ausgabe
+		double laengsteZahl=0;
+		
+		//Ausgabe der Tabelle mit Abgleich des Jahres für Ratentilgung
+		
+		while (jahrratentilgung <= tilgungsdauer) {
+		
+			// Berechnungen für Ratentilgung
+				
+			// Nur für das erste Jahr, Tilgungsrate bleibt gleich
+			if(jahrratentilgung==1) {
+			tabellenAusgeben();
+			laengsteZahl = kreditsummeratentilgung;
+			tilgungsrate = ratentilgungBerechnen(kreditsummeratentilgung, tilgungsdauer);
+			}
+			// Für alle Jahre größer 1
+			else {
+			kreditsummeratentilgung = kreditsummeratentilgung - tilgungsrate;
+			projahrratentilgung = zinsenratentilgung + tilgungsrate;
+			}
+			
+			// Zinsen berechnen
+			zinsenratentilgung = zinsenBerechnen(kreditsummeratentilgung, p);
+			
+			// Jahresbetrag errechnen
+			projahrratentilgung = zinsenratentilgung + tilgungsrate;
+					
+			// Ausgabe Ratentilgung
+			werteAusgeben(jahrratentilgung, kreditsummeratentilgung, zinsenratentilgung, tilgungsrate, projahrratentilgung, laengsteZahl);
+			//System.out.println(jahrratentilgung  + "\t" + a.format(kreditsummeratentilgung) + "\t" + a.format(zinsenratentilgung) + "\t" + a.format(tilgungsrate) + "\t" + a.format(projahrratentilgung));
+			
+			// Jahr erhöhen um 1
+			jahrratentilgung = jahrratentilgung+1;
+			
+		}
+				
+		//Ausgabe der Tabelle mit Abgleich des Jahres für Annuitätentilgung
+		while(jahrannuitaet<= tilgungsdauer) {
+		
+			//Berechnungen für Annuitätentilgung
+			
+			//Nur für das erste Jahr, jährliche Gesamtrate bleibt gleich
+			if(jahrannuitaet==1) {
+			tabellenAusgeben();
+			
+			projahrannuitaet = (annuitaetentilgungBerechnen(kreditsummeannuitaet, tilgungsdauer, p));
+			}
+			
+			
+			
+			//Für alle Jahre größer 1 
+						
+			//Zinsen berechnen
+			kreditsummeannuitaet = 	kreditsummeannuitaet - tilgungsrateannuitaet;
+			zinsenannuitaet = zinsenBerechnen(kreditsummeannuitaet, p);
+			tilgungsrateannuitaet = projahrannuitaet - zinsenannuitaet;
+			
+			//Ausgabe Annuitätentilgung		
+			werteAusgeben(jahrannuitaet, kreditsummeannuitaet, zinsenannuitaet, tilgungsrateannuitaet, projahrannuitaet, laengsteZahl);
+						
+			//Jahr erhöhen um 1
+			jahrannuitaet = jahrannuitaet + 1;
+			
+		}
+		
+		}
+	
+		//Funktionen
+	
+	
+	/**
+	 * Diese Methode berechnet die Ratentilgung 
+	 * @param k: Kreditsumme
+	 * @param n: Tilgungsdauer in Jahren
+	 * @return: Ergebnis der ermittelten Gesamtrate
+	 */
+		public static double ratentilgungBerechnen(double k,double n){
+		
+		double tilgungsrate = k/n;				
+		return tilgungsrate;
+		}
+		
+		// Berechne Annuitäten-Tilgung - jährliche Gesamtrate
+		public static double annuitaetentilgungBerechnen(double kreditsumme, int jahre, double zinssatz) {
+		
+		double gesamtrate = (kreditsumme * Math.pow(1+zinssatz, jahre) * zinssatz) / (Math.pow(1+zinssatz, jahre) -1);
+		
+		return gesamtrate;
+		}
+		
+		// Berechne Zinsen 
+		
+		public static double zinsenBerechnen(double kreditsumme, double p) {
+		
+		double zinsen = kreditsumme*p;
+			
+		return  Math.round(100.0*zinsen)/100.0;
+		}
+
+		public static void tabellenAusgeben() {
+			
+			System.out.println("\nJahr\tRestschuld am\tZinsen\t\t\tTilgung\t\tRate pro Jahr");
+			System.out.println("\tJahresanfang");
+			
+			}
+		
+		public static void werteAusgeben(int jahr, double restschuld, double zinsen, double tilgung, double rate, double laengsteZahl) {
+			DecimalFormat a = new DecimalFormat("###,##0.00 €");
+						
+			String b = laengeAnpassen(a.format(restschuld), a.format(laengsteZahl).length());
+			String c = laengeAnpassen(a.format(zinsen),  a.format(laengsteZahl).length());
+			String d = laengeAnpassen(a.format(tilgung),  a.format(laengsteZahl).length());
+			String e = laengeAnpassen(a.format(rate),  a.format(laengsteZahl).length());
+			
+			String jahrStr = "";
+			if(jahr<10) {
+				jahrStr =" " + jahr ;
+			}
+			else {
+				jahrStr = "" + jahr;
+			}
+			
+			
+			System.out.println(jahrStr + "\t" + b + "\t" + c + "\t" + "\t" + d + "\t" +e);
+			
+						
+		}
+		
+		public static String laengeAnpassen(String x, int laengsteZahl) {
+			
+			
+			while(x.length()<laengsteZahl ) {
+					x = " " + x ;
+				}
+			
+			
+			return x;
+		}
+		
+			
+}

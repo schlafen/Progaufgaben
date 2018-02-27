@@ -1,0 +1,33 @@
+package mypack;
+
+public class Test3 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		generierePin();
+	}
+
+
+
+
+public static int[] generierePin() {
+	int[] pin = new int[4];
+	
+	for (int i=0; i<pin.length; i++) {
+		pin[i] = (int) (Math.random()*10);
+		
+		System.out.println(pin[i]);
+	for (int j = 0; j<i; j++) {
+		while(pin[j] == pin[i]) {
+			pin[i] = (int) (Math.random()*10);
+			
+		}
+	}
+		
+		}
+	return pin;	
+	}
+		
+	
+}

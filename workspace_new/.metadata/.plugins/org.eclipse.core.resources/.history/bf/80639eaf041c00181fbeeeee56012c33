@@ -1,0 +1,18 @@
+package pack;
+
+public class Artikel implements Comparable<Artikel> {
+
+	private int artikelNr;
+
+	//Konstruktor
+	public Artikel() {
+		
+	}
+	
+	@Override
+	public int compareTo(Artikel a) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+}

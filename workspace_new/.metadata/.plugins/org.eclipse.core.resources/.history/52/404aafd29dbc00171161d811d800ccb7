@@ -1,0 +1,137 @@
+package mypack;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
+public class Aufgabe1 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		//Variablen
+		int tilgungsdauer = 5;
+		double p = 0.07;
+				
+		//Variablen für Annuitätentilgung
+		double kreditsummeannuitaet = 25000.0;
+		double zinsenannuitaet = 0;	
+		double projahrannuitaet = 0;
+		int jahrannuitaet = 1;
+		double tilgungsrateannuitaet = 0;
+		
+		//Variablen für Ratentilgung
+		double kreditsummeratentilgung = 25000.0;
+		double tilgungsrate = 0;
+		double zinsenratentilgung = 0;
+		double projahrratentilgung = 0;
+		int jahrratentilgung = 1;
+		
+		//Variablen für Ausgabe
+		double a = "";
+		String b = "";
+		String c = "";
+		String d= "";
+		
+		//Formate
+		DecimalFormat a = new DecimalFormat("###,##0.00");
+			
+		//Ausgabe der Tabelle mit Abgleich des Jahres für Ratentilgung
+		
+		while (jahrratentilgung <= tilgungsdauer) {
+		
+			// Berechnungen für Ratentilgung
+				
+			// Nur für das erste Jahr, Tilgungsrate bleibt gleich
+			if(jahrratentilgung==1) {
+			tabellenAusgeben();
+			tilgungsrate = ratentilgungBerechnen(kreditsummeratentilgung, tilgungsdauer);
+			}
+			// Für alle Jahre größer 1
+			else {
+			kreditsummeratentilgung = kreditsummeratentilgung - tilgungsrate;
+			projahrratentilgung = zinsenratentilgung + tilgungsrate;
+			}
+			
+			// Zinsen berechnen
+			zinsenratentilgung = zinsenBerechnen(kreditsummeratentilgung, p);
+			
+			// Jahresbetrag errechnen
+			projahrratentilgung = zinsenratentilgung + tilgungsrate;
+					
+			// Ausgabe Ratentilgung
+			System.out.println(jahrratentilgung  + "\t" + a.format(kreditsummeratentilgung) + "\t" + a.format(zinsenratentilgung) + "\t" + a.format(tilgungsrate) + "\t" + a.format(projahrratentilgung));
+			
+			// Jahr erhöhen um 1
+			jahrratentilgung = jahrratentilgung+1;
+			
+		}
+				
+		//Ausgabe der Tabelle mit Abgleich des Jahres für Annuitätentilgung
+		while(jahrannuitaet<= tilgungsdauer) {
+		
+			//Berechnungen für Annuitätentilgung
+			
+			//Nur für das erste Jahr, jährliche Gesamtrate bleibt gleich
+			if(jahrannuitaet==1) {
+			tabellenAusgeben();
+			projahrannuitaet = (annuitaetentilgungBerechnen(kreditsummeannuitaet, tilgungsdauer, p));
+			}
+			
+			
+			
+			//Für alle Jahre größer 1 
+						
+			//Zinsen berechnen
+			//kreditsummeannuitaet = 	Math.round(100.0*(kreditsummeannuitaet - tilgungsrateannuitaet))/100.0;
+			kreditsummeannuitaet = 	kreditsummeannuitaet - tilgungsrateannuitaet;
+			zinsenannuitaet = zinsenBerechnen(kreditsummeannuitaet, p);
+			tilgungsrateannuitaet = projahrannuitaet - zinsenannuitaet;
+			
+			//Ausgabe Annuitätentilgung		
+			werteAusgeben(a.format(kreditsummeannuitaet), a.format(zinsenannuitaet), a.format(zinsenannuitaet));
+			//System.out.println(jahrannuitaet  + "\t" + a.format(kreditsummeannuitaet) + "\t" + a.format(zinsenannuitaet) + "\t" + a.format(tilgungsrateannuitaet) + "\t" + a.format(projahrannuitaet));
+						
+			
+			//Jahr erhöhen um 1
+			jahrannuitaet = jahrannuitaet + 1;
+			
+		}
+		
+		}
+	
+		//Funktionen
+	
+		// Berechne Ratentilgung - Tilgungsrate
+		public static double ratentilgungBerechnen(double k,double n){
+		
+		double tilgungsrate = k/n;				
+		return Math.round(100.0 * tilgungsrate)/100.0;
+		}
+		
+		// Berechne Annuitäten-Tilgung - jährliche Gesamtrate
+		public static double annuitaetentilgungBerechnen(double kreditsumme, int jahre, double zinssatz) {
+		
+		double gesamtrate = (kreditsumme * Math.pow(1+zinssatz, jahre) * zinssatz) / (Math.pow(1+zinssatz, jahre) -1);
+		
+		return gesamtrate;
+		}
+		
+		// Berechne Zinsen 
+		
+		public static double zinsenBerechnen(double kreditsumme, double p) {
+		
+		double zinsen = kreditsumme*p;
+			
+		return  Math.round(100.0*zinsen)/100.0;
+		}
+
+		public static void tabellenAusgeben() {
+			System.out.println("Jahr\tRestschuld am\tZinsen\t\tTilgung\t\tRate pro Jahr");
+			System.out.println("\tJahresanfang");
+			
+			}
+		
+		public static void werteAusgeben(String a, String b, String c) {
+			System.out.println(a  + "\t" + b + "\t" + c );
+		}
+			
+}

@@ -1,0 +1,16 @@
+package mypack;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
+public class Test2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		
+		double test = 1345.325;
+		DecimalFormat a = new DecimalFormat("###,##0.00 €");
+		System.out.println(a.format(test));
+	}
+
+}

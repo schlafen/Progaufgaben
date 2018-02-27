@@ -1,0 +1,104 @@
+package mypack;
+
+public class Test3 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+	
+	
+	int a = 666;
+	int b = 1;
+	int m = 1234;
+	int seed = 8;
+	
+	pinGenerieren(a, b, m, seed);
+	
+	}
+
+
+
+
+	public static String pinGenerieren(int a, int b, int m, int seed) {
+		String pin="";
+		
+		
+		int random = naechsteZahl(a, b, m, seed);
+		pin = "" + random;
+		boolean enough = false;
+		for(int n=0; n<10000; n++) {
+		do  {
+		
+			
+			random = naechsteZahl(a, b, m, seed);
+			pin= "" + random;
+			seed = random;
+			char[] pinCharacters = pin.toCharArray();
+			
+			
+		} while(pin.length()>4 || pin.length()<4 && enough);
+				
+			if(pin.length() >= 3) {
+				
+				if(pin.length() == 3 ) {
+				pin = "0" + pin;	
+				}
+				
+				char[] pinCharacters = pin.toCharArray();
+				
+				if(pin.length() == 4) {
+					enough = true;
+					for(int i = 0; i<pin.length(); i++) {
+						char compare = pinCharacters[i];
+						for (int j = i + 1; j<pin.length(); j++) {
+							if(pinCharacters[j] == compare) {
+								enough = false;
+							}
+							
+							
+						}
+					}
+					
+				}
+				if(enough == true) {
+				System.out.println(pin);
+				}
+				
+					
+				}
+		}
+			return pin;
+			}
+	
+		//if(pin.length() == 4)	{
+			//abgleichen - keine doppelten zahlen
+		//}
+		
+									
+	
+
+
+		
+	public static int naechsteZahl(int a, int b, int m, int seed){
+		int zufallszahl = (a * seed + b) % m;
+		//seed = zufallszahl;
+		
+		
+		return zufallszahl;
+	}
+
+
+public static boolean pruefeDoppelte(int[] pin) {
+	boolean doppelt = false;
+	
+	for (int i=0; i<pin.length; i++) {
+		
+	}
+	
+	return doppelt;
+}
+
+
+ 
+            
+  
+}

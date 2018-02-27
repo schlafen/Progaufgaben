@@ -1,0 +1,65 @@
+package pack;
+
+import java.util.TreeMap;
+import java.io.FileInputStream;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class Empfehlung {
+
+	// Key Kunde, Value Artikellliste
+	private TreeMap<Kunde, Artikel[]> einkauf = new TreeMap<>();
+	private Artikel[] artikelliste;
+
+	public Empfehlung() throws Exception {
+		// Daten einlesen
+		try (Workbook wb = new XSSFWorkbook(new FileInputStream(".//src//pack//Daten.xls"))) {
+			Sheet sheet = wb.getSheetAt(0);
+			for (Row row : sheet) {
+				System.out.println("rownum: " + row.getRowNum());
+				
+				for (Cell cell : row) {
+					System.out.println(cell);
+					double kundenNr = 0;
+					double gekauft = 0;
+					
+					if (cell.getColumnIndex() == 0) {
+						einkauf = cell.getNumericCellValue();
+					}
+					
+					//Artikel in Liste hinzufügen
+					while(cell.getColumnIndex()<=6 && cell.getColumnIndex()>1)
+						if(cell.getNumericCellValue()>0) {
+							artikelliste[0] = new Artikel((int)cell.getNumericCellValue()*111);
+						}
+					}
+					
+					if (cell.getColumnIndex() == 2) {
+						artikelliste[0] = new Artikel(111);
+					}
+					
+					if (cell.getColumnIndex() == 3) {
+						artikelliste[0] = new Artikel(111);
+					}
+					
+					if (cell.getColumnIndex() == 4) {
+						artikelliste[0] = new Artikel(111);
+					}
+					
+					if (cell.getColumnIndex() == 5) {
+						artikelliste[0] = new Artikel(111);
+					}
+					
+					if (cell.getColumnIndex() == 1) {
+						artikelliste[0] = new Artikel(111);
+					}
+				}
+			}
+		}
+
+	}
+
+	public void berechneEmpfehlung() {
+
+	}
+}

@@ -1,0 +1,58 @@
+package mypack;
+
+public class Test3 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		generierePin();
+	}
+
+
+
+
+public static int[] generierePin() {
+	int[] pin = new int[4];
+	
+	for (int i=0; i<pin.length; i++) {
+		pin[i] = (int) (Math.random()*10);
+	for(int j = i+1; j<pin.length; j++) {
+		while(i == j)
+			pin[j] = (int) (Math.random()*10);
+	}
+	System.out.println(pin[i]);	
+	}
+
+
+		
+		
+		
+	return pin;	
+	}
+
+		
+
+
+
+public static boolean pruefeDoppelte(int[] pin) {
+	boolean doppelt = false;
+	
+	for (int i=0; i<pin.length; i++) {
+		
+	}
+	
+	return doppelt;
+}
+
+
+ public static void rechnung(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            for (int j = 0; j < array.length; j++) {
+                if (i == j) {
+                    System.out.println(array[i] + " gleich " + array[j] + " " + (array[i] == array[j]));
+                }
+            }
+        }
+    }
+}
+}

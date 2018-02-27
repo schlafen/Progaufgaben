@@ -1,0 +1,21 @@
+package mypack;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
+public class Test2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		double a = 123455;
+		double b = 55536;
+		
+		String pin = "Matze heul leise";
+		char[] pinCharacters = pin.toCharArray();
+		System.out.print(pinCharacters);
+		
+		}
+	}
+
+
+

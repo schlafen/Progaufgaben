@@ -1,0 +1,75 @@
+package mypack;
+
+public class Aufgabe2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		
+		long a = 521;
+		long b = 1;
+		long m = 1234;
+		long seed = 5;
+		
+		testePeriode(a, b, m, seed);
+		
+		testeMittelwert(a, b, m, seed);
+		
+		}
+	
+		
+
+	
+	public static long naechsteZahl(long a, long b, long m, long seed){
+		long zufallszahl = (a * seed + b) % m;
+		//seed = zufallszahl;
+		
+		
+		return zufallszahl;
+	}
+	
+	public static int testePeriode(long a, long b, long m, long seed) {
+			
+		int periode=0;
+		
+		long naechstezahl = 0;
+		long startzahl = naechsteZahl(a, b, m, seed);
+		seed = startzahl;
+		
+		while (startzahl!=naechstezahl) {
+		naechstezahl = naechsteZahl(a, b, m, seed);
+		seed = naechstezahl;
+		periode = periode + 1;
+		}
+		
+		System.out.println(periode);
+		return periode;
+		
+		
+		
+	}
+	
+	public static long testeMittelwert(long a, long b, long m, long seed) {
+		long max = 1000000000;
+		long sum = 0;
+		long random = 0;
+		long mittelwert = 0;
+		
+		for(long i = 1; i <=max; i++) {
+			random = naechsteZahl(a, b, m, seed);
+			sum = sum + random;
+			seed = random;
+			}
+		
+		mittelwert = sum/max;
+		System.out.println(mittelwert);
+		return mittelwert;
+		}
+	
+	public static long testeVarianz(long a, long b, long m, long seed) {
+		long varianz = 0;
+		
+		return varianz;
+		
+	}
+}

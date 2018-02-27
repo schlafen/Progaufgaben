@@ -1,0 +1,36 @@
+package pack;
+
+import java.util.TreeMap;
+import java.io.FileInputStream;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class Empfehlung {
+
+	// Key Kunde, Value Artikellliste
+	private TreeMap<Kunde, Artikel[][]> einkauf = new TreeMap<>();
+
+	public Empfehlung() throws Exception {
+		// Daten einlesen
+		try (Workbook wb = new XSSFWorkbook(new FileInputStream(".//src//pack//Daten.xls"))) {
+			Sheet sheet = wb.getSheetAt(0);
+			for (Row row : sheet) {
+				System.out.println("rownum: " + row.getRowNum());
+				for (Cell cell : row) {
+					System.out.println(cell);
+					double myNumber = 0;
+					String myString = "";
+					if (cell.getColumnIndex() == 0) {
+						myNumber = cell.getNumericCellValue();
+						System.out.println("Meine Zahl: " + myNumber);
+					}
+				}
+			}
+		}
+
+	}
+
+	public void berechneEmpfehlung() {
+
+	}
+}

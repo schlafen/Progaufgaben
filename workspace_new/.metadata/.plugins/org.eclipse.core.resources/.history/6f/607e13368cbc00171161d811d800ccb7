@@ -1,0 +1,41 @@
+package mypack;
+
+public class Aufgabe2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		
+		long a = 521;
+		long b = 1;
+		long m = 1234;
+		long seed = 5;
+		
+		
+		long testzahl = naechsteZahl(a, b, m, seed);
+		System.out.println(testzahl);
+		seed = testzahl;
+		
+		for(int i = 0; i<m; i++) {
+		naechsteZahl(a, b, m, seed);
+		seed = testzahl;
+		}
+		
+		long any = naechsteZahl(a, b, m, seed);
+		long cnt = 1;
+		while(naechsteZahl(a, b, m, seed) != any) {
+			cnt= cnt +1;
+		}
+		System.out.println("Periode: " + cnt);
+	}
+
+	
+	public static long naechsteZahl(long a, long b, long m, long seed){
+		long zufallszahl = (a * seed + b) % m;
+				
+		
+		return zufallszahl;
+	}
+	
+
+}
