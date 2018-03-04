@@ -21,6 +21,41 @@ public class Kunde implements Comparable<Kunde>{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	public int getKundenNr() {
+		return kundenNr;
+	}
+
+	public void setKundenNr(int kundenNr) {
+		this.kundenNr = kundenNr;
+	}
+
+	public String getKundenName() {
+		return kundenName;
+	}
+
+	public void setKundenName(String kundenName) {
+		this.kundenName = kundenName;
+	}
+
+	public String getLand() {
+		return land;
+	}
+
+	public void setLand(String land) {
+		this.land = land;
+	}
+
+	public int getAlter() {
+		return alter;
+	}
+
+	public void setAlter(int alter) {
+		this.alter = alter;
+	}
+
+	
+	
 	
 	
 

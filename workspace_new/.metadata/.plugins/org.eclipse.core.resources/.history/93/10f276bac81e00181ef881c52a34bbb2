@@ -1,0 +1,13 @@
+package pack;
+
+import java.util.List;
+
+public class EmpfehlungArtikel extends Empfehlung{
+
+	
+	
+	protected void zusatzFiltern(List<Kunde> kundenMitDemGleichenArtikel) {	
+		
+	}
+
+}

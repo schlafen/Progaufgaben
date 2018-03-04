@@ -1,0 +1,90 @@
+package pack;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class EmpfehlungKunde extends Empfehlung{
+
+	private List<Kunde> kundenListe = new ArrayList<Kunde>();
+
+	public EmpfehlungKunde() throws FileNotFoundException, IOException {
+		try (Workbook wb = new XSSFWorkbook(new FileInputStream(".//src//pack//Daten.xlsx"))) {
+			Sheet sheet = wb.getSheetAt(1);
+			for (Row row : sheet) {
+
+				int kundenNr = 0;
+				String kundenName = "";
+				String land = "";
+				int alter = 0;
+
+				for (Cell cell : row) {
+					// System.out.println(cell);
+
+					if (cell.getColumnIndex() == 0) {
+						kundenNr = (int) cell.getNumericCellValue();
+					}
+
+					if (cell.getColumnIndex() == 1) {
+						kundenName = cell.getStringCellValue();
+					}
+
+					if (cell.getColumnIndex() == 2) {
+						land = cell.getStringCellValue();
+					}
+
+					if (cell.getColumnIndex() == 3) {
+						alter = (int) cell.getNumericCellValue();
+					}
+				}
+
+				kundenListe.add(new Kunde(kundenNr, kundenName, land, alter));
+			}
+		}
+	}
+
+	@Override
+	protected void zusatzFiltern(List<Kunde> kundenMitDemGleichenArtikel) {
+		int platzhalter = 50;
+		double landKundeZuVergleichen = 1.0;
+		int alterKundeZuVergleichen = 22;
+		double aehnlichkeit = 0;	
+		double landVergleich = 0;
+		
+		for (Kunde k: kundenMitDemGleichenArtikel) {
+			for (Kunde n: kundenListe) {
+				
+				if(n.getLand() == "DE") {
+					landVergleich = 1.0;
+				}
+				
+				if(n.getLand() == "CH") {
+					landVergleich = 0.8;
+				}
+				
+				if(n.getLand() == "US") {
+					landVergleich = 0.7;
+				}
+				
+			}
+				
+		}
+		
+		
+		
+		System.out.println("Best-Match-Kunde: ");
+		System.out.println("Empfehlungen fuer KundeNr " );
+		
+		
+	}
+	
+
+}

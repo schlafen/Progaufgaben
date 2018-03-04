@@ -1,0 +1,17 @@
+package pack;
+
+import java.util.List;
+import java.util.TreeMap;
+
+public class EmpfehlungArtikel extends Empfehlung{
+
+	
+	
+	protected void zusatzFiltern(List<Kunde> kundenMitDemGleichenArtikel) {	
+		int platzhalter = 444;
+		TreeMap<Integer, Integer> empfehlungKombiArtikel = new TreeMap<>();
+		
+		System.out.println("Haeufigkeit Kombi-Artikel fuer ArtikelNr");
+	}
+
+}

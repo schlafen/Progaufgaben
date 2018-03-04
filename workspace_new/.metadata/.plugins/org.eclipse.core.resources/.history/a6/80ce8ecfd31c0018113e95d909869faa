@@ -1,0 +1,11 @@
+package pack;
+
+abstract public class Schablone {
+
+	private Empfehlung empfehlung = new Empfehlung();
+	final public void kundenMitDemGleichenArtikel() {
+		
+	}
+	
+	abstract protected void zusatzFiltern(); //Einschubmethode
+}

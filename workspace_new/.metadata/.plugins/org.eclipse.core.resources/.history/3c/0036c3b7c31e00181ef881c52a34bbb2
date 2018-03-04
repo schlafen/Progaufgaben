@@ -1,0 +1,100 @@
+package pack;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.TreeMap;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public abstract class Empfehlung {
+
+	// Key Kunde, Value Artikellliste, erstmal mit Double und Artikel
+	private TreeMap<Double, Artikel[]> einkauf = new TreeMap<>();
+	//private Artikel[] artikelliste = new Artikel[6];
+	private List<Artikel> artikelliste = new ArrayList<Artikel>();
+	public List<Kunde> kundenMitDemGleichenArtikel = new ArrayList<Kunde>();
+
+	public Empfehlung(){
+		try {
+			leseDaten();
+		} catch (FileNotFoundException e) {
+			System.out.println("Datei nicht gefunden!");
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public TreeMap<Double, Artikel[]> getEinkauf() {
+		return einkauf;
+	}
+
+
+	public void setEinkauf(TreeMap<Double, Artikel[]> einkauf) {
+		this.einkauf = einkauf;
+	}
+
+
+	public List<Artikel> getArtikelliste() {
+		return artikelliste;
+	}
+
+
+	public void setArtikelliste(List<Artikel> artikelliste) {
+		this.artikelliste = artikelliste;
+	}
+
+
+	private void leseDaten()  throws FileNotFoundException, IOException{
+		// Daten einlesen
+				try (Workbook wb = new XSSFWorkbook(new FileInputStream(".//src//pack//Daten.xlsx"))) {
+					Sheet sheet = wb.getSheetAt(0);
+					for (Row row : sheet) {
+						if(row.getRowNum()==0) {}
+						else {
+						//System.out.println("rownum: " + row.getRowNum());
+						int i=0;
+						double kundenNr = 0;
+						for (Cell cell : row) {
+							//System.out.println(cell);
+							
+							if (cell.getColumnIndex() == 0) {
+								kundenNr = cell.getNumericCellValue();
+							}
+
+							// Artikel in Liste hinzufügen
+							if (cell.getColumnIndex() <= 6 && cell.getColumnIndex() > 1) {
+								if (cell.getNumericCellValue() == 1) {
+									//artikelliste[i] = new Artikel((i+2) * 111);
+									artikelliste.add(new Artikel((i+2)*111));
+								}
+							i++;
+							}
+								
+							einkauf.put(kundenNr, artikelliste);
+						}
+						}
+					}
+				}
+	}
+	@Override
+	public String toString() {
+		return "Empfehlung [Key=" + einkauf + ", artikelliste=" + Arrays.toString(artikelliste) + "]";
+	}
+
+
+
+	public void berechneEmpfehlung() {
+
+	}
+	
+	abstract protected void zusatzFiltern(); //Einschubmethode
+	
+}

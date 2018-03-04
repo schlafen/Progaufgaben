@@ -1,0 +1,16 @@
+package pack;
+
+abstract public class Schablone {
+
+	private Empfehlung empfehlung = new Empfehlung();
+	
+	final public void kundenMitDemGleichenArtikel() {
+		Artikel[] artikelliste = empfehlung.getArtikelliste();
+		
+		for(int i=0; i<=6; i++) {
+			artikelliste[i]
+		}
+	}
+	
+	abstract protected void zusatzFiltern(); //Einschubmethode
+}
